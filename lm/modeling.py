@@ -433,6 +433,7 @@ def _top_k_sample(logits, ignore_ids=None, num_samples=1, k=10):
 
 
 class GroverModel(object):
+    @tf.compat.v1.keras.utils.track_tf1_style_variables
     def __init__(self,
                  config: GroverConfig,
                  is_training,
@@ -487,8 +488,8 @@ class GroverModel(object):
             assert features_ == (config.hidden_size // config.num_attention_heads)
             caches = tf.unstack(cache, axis=1)
 
-        with tf.variable_scope(scope, default_name='newslm', reuse=reuse):
-            with tf.variable_scope("embeddings"):
+        with tf.compat.v1.variable_scope(scope, default_name='newslm', reuse=reuse):
+            with tf.compat.v1.variable_scope("embeddings"):
                 embeddings, self.embedding_table = embed(self.input_ids, config.vocab_size,
                                                          config.hidden_size,
                                                          position_offset=self.cache_length,
