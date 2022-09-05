@@ -487,7 +487,7 @@ class GroverModel(object):
             assert features_ == (config.hidden_size // config.num_attention_heads)
             caches = tf.unstack(cache, axis=1)
 
-        with tf.compat.v1.variable_scope(scope, default_name='newslm', reuse=reuse):
+        with tf.compat.v1.variable_scope(scope, default_name='newslm', reuse=True):
             with tf.compat.v1.variable_scope("embeddings"):
                 embeddings, self.embedding_table = embed(self.input_ids, config.vocab_size,
                                                          config.hidden_size,
@@ -722,7 +722,7 @@ def sample_step(tokens, ignore_ids, news_config, batch_size=1, p_for_topp=0.95, 
         config=news_config,
         is_training=False,
         input_ids=tokens,
-        # reuse=tf.compat.v1.AUTO_REUSE,
+        reuse=True,
         scope='newslm',
         chop_off_last_token=False,
         do_cache=True,
