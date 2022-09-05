@@ -487,7 +487,7 @@ class GroverModel(object):
             assert features_ == (config.hidden_size // config.num_attention_heads)
             caches = tf.unstack(cache, axis=1)
 
-        with tf.compat.v1.variable_scope(scope, default_name='newslm', reuse=True):
+        with tf.compat.v1.variable_scope(scope, default_name='newslm'):
             with tf.compat.v1.variable_scope("embeddings"):
                 embeddings, self.embedding_table = embed(self.input_ids, config.vocab_size,
                                                          config.hidden_size,
