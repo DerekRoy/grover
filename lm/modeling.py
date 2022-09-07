@@ -293,7 +293,7 @@ def embed(input_ids,
     """
     (batch_size, seq_length) = get_shape_list(input_ids, expected_rank=2)
 
-    embedding_table = tf.get_variable(
+    embedding_table = tf.compat.v1.get_variable(
         name='word_embed',
         shape=[vocab_size, embedding_size],
         initializer=create_initializer(initializer_range),
