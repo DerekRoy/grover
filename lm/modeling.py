@@ -433,7 +433,6 @@ def _top_k_sample(logits, ignore_ids=None, num_samples=1, k=10):
 
 
 class GroverModel(object):
-    @tf.compat.v1.keras.utils.track_tf1_style_variables
     def __init__(self,
                  config: GroverConfig,
                  is_training,
