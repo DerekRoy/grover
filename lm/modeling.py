@@ -136,7 +136,7 @@ def _attention_projection_and_transpose(x_flat, batch_size, seq_length, num_atte
             (batch_size_seq_length, dim), size_per_head, num_attention_heads
         ))
 
-    projected = tf.compat.v1.layers.dense(
+    projected = tf.keras.layers.Dense(
         x_flat,
         num_attention_heads * size_per_head,
         name=name,
@@ -232,7 +232,7 @@ def attention_layer(x_flat, attention_mask, batch_size, seq_length, size_per_hea
     context_layer = tf.transpose(a=context_layer, perm=[0, 2, 1, 3])
     context_layer = tf.reshape(context_layer, [batch_size * seq_length, num_attention_heads * size_per_head])
 
-    context_layer_projected = tf.compat.v1.layers.dense(
+    context_layer_projected = tf.keras.layers.Dense(
         context_layer,
         num_attention_heads * size_per_head,
         kernel_initializer=create_initializer(initializer_range),
@@ -255,7 +255,7 @@ def residual_mlp_layer(x_flat, intermediate_size, initializer_range=0.02, hidden
     batch_size_seq_length, hidden_size = get_shape_list(x_flat, expected_rank=2)
     x_norm = layer_norm(x_flat, name='mlp_ln0')
 
-    intermediate_output = tf.compat.v1.layers.dense(
+    intermediate_output = tf.keras.layers.Dense(
         x_norm,
         intermediate_size,
         activation=gelu,
@@ -263,7 +263,7 @@ def residual_mlp_layer(x_flat, intermediate_size, initializer_range=0.02, hidden
         name='intermediate',
     )
 
-    output_for_residual = tf.compat.v1.layers.dense(
+    output_for_residual = tf.keras.layers.Dense(
         intermediate_output,
         hidden_size,
         name='output',
@@ -849,7 +849,7 @@ def classification_model_fn_builder(config: GroverConfig, init_checkpoint, learn
             hidden_state = model.pooled_output(pool_token_id)
             if is_training:
                 hidden_state = dropout(hidden_state, dropout_prob=0.1)
-            logits = tf.compat.v1.layers.dense(
+            logits = tf.keras.layers.Dense(
                 hidden_state,
                 num_labels,
                 kernel_initializer=create_initializer(config.initializer_range),
