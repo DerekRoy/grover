@@ -114,7 +114,7 @@ def mask_attention_for_ltr(attention_scores, attention_mask):
 
 def create_initializer(initializer_range=0.02):
     """Creates a `truncated_normal_initializer` with the given range."""
-    return tf.truncated_normal_initializer(stddev=initializer_range)
+    return tf.compat.v1.truncated_normal_initializer(stddev=initializer_range)
 
 
 def _attention_projection_and_transpose(x_flat, batch_size, seq_length, num_attention_heads, size_per_head,
